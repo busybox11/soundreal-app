@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, ScrollView } from 'react-native';
 import { StatusBar as ReactStatusBar } from 'react-native';
+
+import { SoundReal } from './components/soundreal';
+import { Reaction } from './components/reactions';
 
 export default function App() {
   return (
@@ -34,7 +37,9 @@ export default function App() {
                 <Text style={{color: '#AAA', fontWeight: 'light', fontSize: 16 }}>Joji • Glimpse of Us</Text>
               </View>
 
-              <Text style={styles.reactions.circleBg}>😭</Text>
+              <Reaction
+                content={"😭"}
+              />
             </View>
 
             <View style={styles.separation} />
@@ -42,6 +47,37 @@ export default function App() {
           </View>
         </View>
       </View>
+
+      <ScrollView>
+        <SoundReal
+          user={{
+            username: 'pabloleplusbeau',
+            profilePicture: 'https://cyber-privacy.net/wp-content/uploads/thispersondoesnotexist.com-image02-1024x1024.jpg'
+          }}
+          track={{
+            title: 'Auburn',
+            artist: 'Lomepal',
+            album: 'Auburn',
+            albumArt: 'https://i.scdn.co/image/ab67616d0000b273366ca0996e7229cc007dcbde'
+          }}
+          caption={"incroyable cette musique"}
+          reaction={'✨'}
+        />
+        <SoundReal
+          user={{
+            username: 'michaeeeeel',
+            profilePicture: 'https://www.proresource.com/wp-content/uploads/2022/01/Jett-McCandless.jpeg'
+          }}
+          track={{
+            title: 'Lezgongue',
+            artist: 'ZZCCMXTP',
+            album: 'ZZCCMXTP',
+            albumArt: 'https://i.scdn.co/image/ab67616d0000b2739143f1836e8aa76d41dfac90'
+          }}
+          caption={"c'est une dinguerie ce truc wow"}
+        />
+      </ScrollView>
+
       <StatusBar style="light" />
     </SafeAreaView>
   );
@@ -51,19 +87,6 @@ const styles = StyleSheet.create({
   text: {
     title: { color: '#FFF', fontWeight: 'bold', fontSize: 30, lineHeight: 32 },
     subtitle: {color: '#AAA', fontWeight: 'light', fontSize: 18 }
-  },
-
-  reactions: {
-    circleBg: {
-      height: 30,
-      width: 30,
-      fontSize: 18,
-      borderRadius: 1000,
-      backgroundColor: '#FFF',
-
-      textAlign: 'center',
-      textAlignVertical: 'center'
-    }
   },
 
   container: {
