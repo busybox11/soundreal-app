@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1/1,
 
-    marginBottom: 10
+    marginBottom: 12
   },
 
   lyricsBtn: {
@@ -190,14 +190,14 @@ const styles = StyleSheet.create({
   },
 
   trackArtistAlbum: {
-    color: '#AAA',
+    color: '#B5B5B5',
     fontWeight: 'light',
     fontSize: 16,
     lineHeight: 20
   },
 
   caption: {
-    color: '#555',
+    color: '#FFFFFF80',
     fontWeight: 'light',
     fontSize: 12,
     lineHeight: 20,
