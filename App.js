@@ -34,7 +34,7 @@ export default function App() {
             <View style={{display: 'flex', flexDirection: 'row'}}>
               <View style={{flex: 1}}>
                 <Text style={styles.headerReal.trackName}>Glimpse of Us</Text>
-                <Text style={{color: '#AAA', fontWeight: 'light', fontSize: 16 }}>Joji • Glimpse of Us</Text>
+                <Text style={styles.headerReal.trackArtistAlbum}>Joji • Glimpse of Us</Text>
               </View>
 
               <Reaction
@@ -43,7 +43,7 @@ export default function App() {
             </View>
 
             <View style={styles.separation} />
-            <Text style={{color: '#FFF', fontWeight: 'light', fontSize: 16, marginTop: 6 }}>i am crying rn</Text>
+            <Text style={{color: '#FFF', fontWeight: 'light', fontSize: 12, marginTop: 6 }}>i am crying rn</Text>
           </View>
         </View>
       </View>
@@ -60,6 +60,11 @@ export default function App() {
             album: 'Auburn',
             albumArt: 'https://i.scdn.co/image/ab67616d0000b273366ca0996e7229cc007dcbde'
           }}
+          lyrics={[
+            "Le mal est partout, comment faire attention ?",
+            "J'aurais jamais assez vécu",
+            "Pour savoir reconnaître une bonne intention"
+          ]}
           caption={"incroyable cette musique"}
           reaction={'✨'}
         />
@@ -74,6 +79,11 @@ export default function App() {
             album: 'ZZCCMXTP',
             albumArt: 'https://i.scdn.co/image/ab67616d0000b2739143f1836e8aa76d41dfac90'
           }}
+          lyrics={[
+            "Et qauand on sort un skeud, y'a rarement d'défauts dessus",
+            `ZZCC, crie "Lezgongue" dans la boîte (crie "Lezgongue" dans la boîte)`,
+            "Si tu fais le suceur, on te récompensera pas"
+          ]}
           caption={"c'est une dinguerie ce truc wow"}
         />
       </ScrollView>
@@ -85,8 +95,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   text: {
-    title: { color: '#FFF', fontWeight: 'bold', fontSize: 30, lineHeight: 32 },
-    subtitle: {color: '#AAA', fontWeight: 'light', fontSize: 18 }
+    title: { color: '#FFF', fontWeight: 'bold', fontSize: 26, lineHeight: 30 },
+    subtitle: {color: '#AAA', fontWeight: 'light', fontSize: 16, lineHeight: 20 }
   },
 
   container: {
@@ -106,8 +116,8 @@ const styles = StyleSheet.create({
   },
 
   headerProfilePic: {
-    height: 40,
-    width: 40,
+    height: 50,
+    width: 50,
     borderRadius: 1000
   },
 
@@ -119,20 +129,21 @@ const styles = StyleSheet.create({
       flexDirection: 'row'
     },
     imgCover: {
-      width: 100,
-      height: 100,
-      marginRight: 20
+      width: 80,
+      height: 80,
+      marginRight: 18
     },
     trackInfo: {
       flex: 1
     },
-    trackName: { color: '#FFF', fontWeight: 'bold', fontSize: 24, lineHeight: 26, marginBottom: 2 }
+    trackName: { color: '#FFF', fontWeight: 'bold', fontSize: 20, lineHeight: 22, marginBottom: 4 },
+    trackArtistAlbum: { color: '#B5B5B5', fontSize: 12, lineHeight: 14 }
   },
 
   separation: {
     height: 1,
     width: '100%',
-    backgroundColor: '#474747',
+    backgroundColor: '#FFFFFF33',
     marginTop: 'auto'
   }
 });

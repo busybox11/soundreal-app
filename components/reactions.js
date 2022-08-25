@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     circleBg: {
         height: 30,
         width: 30,
-        fontSize: 18,
+        fontSize: 16,
         borderRadius: 1000,
         backgroundColor: '#FFF',
 
