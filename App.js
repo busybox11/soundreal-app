@@ -18,9 +18,22 @@ export default class App extends Component {
         playing: false,
         id: undefined
       }
-    }
+    };
 
-    this.sound = new Audio.Sound()
+    this.sound = new Audio.Sound();
+
+    this.sound._onPlaybackStatusUpdate = async (playbackStatus) => {
+      if (playbackStatus.didJustFinish == true) {
+        this.setState({
+          preview: {
+            playing: false
+          }
+        })
+
+        // TODO: Remove audio session because still active after this
+        await this.sound.unloadAsync();
+      }
+    }
   }
 
   async playPreview(origin) {
