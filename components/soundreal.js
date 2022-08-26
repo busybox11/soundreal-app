@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, TouchableNativeFeedbackBase } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Polygon, Rect } from 'react-native-svg';
 
 import { Reaction } from './reactions';
 
 class SoundReal extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    this.state = {
+      showLyrics: false,
+      isPlaying: false
+    }
+  }
+
+  toggleLyrics() {
+    const { showLyrics } = this.state;
+
+    this.setState({ showLyrics: !showLyrics })
   }
 
   render() {
@@ -36,59 +47,81 @@ class SoundReal extends Component {
             uri: props.track.albumArt,
           }}
         >
-          <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.6)']}
-            style={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: 0,
-              height: '100%',
-            }}
-          />
-
+          
           <View style={{
-            padding: 16,
+            padding: 8,
             flex: 0,
             justifyContent: 'space-between',
-            alignItems: 'flex-end'
+            alignItems: 'flex-end',
+            zIndex: 10
           }}>
-            <Text style={styles.lyricsBtn.bg}>
-              <Svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-microphone-2" width={20} height={20} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <Path stroke="none" d="M0 0h24v24H0z" fill="none"></Path>
-                <Path d="M15.002 12.9a5 5 0 1 0 -3.902 -3.9" stroke="white"></Path>
-                <Path d="M15.002 12.9l-3.902 -3.899l-7.513 8.584a2 2 0 1 0 2.827 2.83l8.588 -7.515z" stroke="white"></Path>
-              </Svg>
-            </Text>
+            <TouchableOpacity style={{padding: 8}} onPress={this.toggleLyrics.bind(this)}>
+              <View style={styles.lyricsBtn.bg}>
+                <Svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" strokeWidth="2" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <Path stroke="none" d="M0 0h24v24H0z" fill="none"></Path>
+                  <Path d="M15.002 12.9a5 5 0 1 0 -3.902 -3.9" />
+                  <Path d="M15.002 12.9l-3.902 -3.899l-7.513 8.584a2 2 0 1 0 2.827 2.83l8.588 -7.515z" />
+                </Svg>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{padding: 8}} onPress={() => { this.props.playPreview(this) }}>
+              <View style={styles.lyricsBtn.bg}>
+                { !(this.props.previewState.playing && this.props.previewState.id == this.props.id) && 
+                  <Svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <Polygon points="5 3 19 12 5 21 5 3" />
+                  </Svg>
+                }
+                { (this.props.previewState.playing && this.props.previewState.id == this.props.id) && 
+                  <Svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <Rect x="6" y="4" width="4" height="16" /><Rect x="14" y="4" width="4" height="16" />
+                  </Svg>
+                }
+              </View>
+            </TouchableOpacity>
           </View>
 
-          <View style={{
-            padding: 20,
-            flex: 1,
-            justifyContent: 'flex-end',
-            flexDirection: 'column',
-          }}>
-            <Text style={styles.lyrics.small}>{props.lyrics[0]}</Text>
-            <Text style={styles.lyrics.large}>{props.lyrics[1]}</Text>
-            <Text style={styles.lyrics.small}>{props.lyrics[2]}</Text>
-          </View>
+          { this.state.showLyrics && <>
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.6)']}
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                height: '100%',
+              }}
+            />
 
-          <View>
             <View style={{
-              flex: 0,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              margin: 20,
-              marginTop: 0,
-              marginBottom: 10
+              padding: 20,
+              flex: 1,
+              justifyContent: 'flex-end',
+              flexDirection: 'column',
             }}>
-              <Text style={styles.timestamps}>2:23</Text>
-              <Text style={styles.timestamps}>3:19</Text>
+              <Text style={styles.lyrics.small}>{props.lyrics[0]}</Text>
+              <Text style={styles.lyrics.large}>{props.lyrics[1]}</Text>
+              <Text style={styles.lyrics.small}>{props.lyrics[2]}</Text>
             </View>
-            <View style={{flex: 0, height: 4, backgroundColor: '#FFFFFF33'}}>
-              <View style={{flex: 0, height: 4, width: '62.5%', backgroundColor: '#FFFFFF'}} />
+
+            <View>
+              <View style={{
+                flex: 0,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                margin: 20,
+                marginTop: 0,
+                marginBottom: 10
+              }}>
+                <Text style={styles.timestamps}>2:23</Text>
+                <Text style={styles.timestamps}>3:19</Text>
+              </View>
+              <View style={{flex: 0, height: 4, backgroundColor: '#FFFFFF33'}}>
+                <View style={{flex: 0, height: 4, width: '62.5%', backgroundColor: '#FFFFFF'}} />
+              </View>
             </View>
-          </View>
+          </>
+          }
         </ImageBackground>
 
         <View style={{flex: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -153,8 +186,8 @@ const styles = StyleSheet.create({
       borderRadius: 1000,
       backgroundColor: '#FFFFFF40',
 
-      textAlign: 'center',
-      textAlignVertical: 'center'
+      alignItems: 'center',
+      justifyContent: 'center'
     }
   },
 
