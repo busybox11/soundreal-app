@@ -40,14 +40,14 @@ export default class App extends Component {
     const { playing, id } = this.state.preview;
     let nowPlaying = playing
 
-    if (origin.props.id == id) {
+    if (origin.props.id == id || id == undefined) {
       nowPlaying = !playing
     }
 
     this.setState({ preview: {
       playing: nowPlaying,
       id: origin.props.id
-    } })
+    }})
 
     if (nowPlaying) {
       try {
