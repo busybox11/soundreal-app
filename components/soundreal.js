@@ -6,7 +6,7 @@ import Svg, { Path, Polygon, Rect } from 'react-native-svg';
 
 import { Reaction } from './reactions';
 
-class SoundReal extends Component {
+class BaseSoundReal extends Component {
   constructor(props) {
     super(props);
 
@@ -23,31 +23,14 @@ class SoundReal extends Component {
   }
 
   render() {
-    const props = this.props
-
     return (
-      <View style={styles.container}>
-        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-          <Image
-            style={styles.profilePicture}
-            source={{
-              uri: props.user.profilePicture,
-            }}
-          />
-
-          <View style={{flex: 1}}>
-            <Text style={styles.username}>{props.user.username}</Text>
-            <Text style={styles.datePublication}>Just now</Text>
-          </View>
-        </View>
-
+      <View style={{...(this.props.standalone ? styles.container : {})}}>
         <ImageBackground
           style={styles.coverImg}
           source={{
-            uri: props.track.albumArt,
+            uri: this.props.track.albumArt,
           }}
         >
-          
           <View style={{
             padding: 8,
             flex: 0,
@@ -99,9 +82,9 @@ class SoundReal extends Component {
               justifyContent: 'flex-end',
               flexDirection: 'column',
             }}>
-              <Text style={styles.lyrics.small}>{props.lyrics[0]}</Text>
-              <Text style={styles.lyrics.large}>{props.lyrics[1]}</Text>
-              <Text style={styles.lyrics.small}>{props.lyrics[2]}</Text>
+              <Text style={styles.lyrics.small}>{this.props.lyrics[0]}</Text>
+              <Text style={styles.lyrics.large}>{this.props.lyrics[1]}</Text>
+              <Text style={styles.lyrics.small}>{this.props.lyrics[2]}</Text>
             </View>
 
             <View>
@@ -126,14 +109,55 @@ class SoundReal extends Component {
 
         <View style={{flex: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
           <View>
-            <Text style={styles.trackName}>{props.track.title}</Text>
-            <Text style={styles.trackArtistAlbum}>{props.track.artist} • {props.track.album}</Text>
+            <Text style={styles.trackName}>{this.props.track.title}</Text>
+            <Text style={styles.trackArtistAlbum}>{this.props.track.artist} • {this.props.track.album}</Text>
           </View>
 
-          { props.reaction && <Reaction
-            content={props.reaction}
+          { this.props.reaction && <Reaction
+            content={this.props.reaction}
           /> }
         </View>
+      </View>
+    )
+  }
+}
+
+class SoundReal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showLyrics: false,
+      isPlaying: false
+    }
+  }
+
+  toggleLyrics() {
+    const { showLyrics } = this.state;
+
+    this.setState({ showLyrics: !showLyrics })
+  }
+
+  render() {
+    const props = this.props
+
+    return (
+      <View style={styles.container}>
+        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: props.user.profilePicture,
+            }}
+          />
+
+          <View style={{flex: 1}}>
+            <Text style={styles.username}>{props.user.username}</Text>
+            <Text style={styles.datePublication}>Just now</Text>
+          </View>
+        </View>
+
+        <BaseSoundReal {...props} />
 
         <Text style={styles.caption}>{props.caption}</Text>
       </View>
@@ -240,5 +264,6 @@ const styles = StyleSheet.create({
 })
 
 module.exports = {
+  BaseSoundReal,
   SoundReal
 }
