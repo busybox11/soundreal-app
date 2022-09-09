@@ -8,7 +8,6 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "native",
       "backgroundColor": "#000000"
     },
     "updates": {
@@ -24,6 +23,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
+      },
+      "splash": {
+        "resizeMode": "native"
       }
     },
     "web": {
